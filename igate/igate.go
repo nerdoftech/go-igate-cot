@@ -40,17 +40,20 @@ func (b *buff) writeByte(char byte) {
 	b.cnt++
 }
 
+// IGate
 type IGate struct {
 	msgChan chan []byte
 	mu      sync.Mutex
 }
 
+// NewIGate returns IGate
 func NewIGate(ch chan []byte) *IGate {
 	return &IGate{
 		msgChan: ch,
 	}
 }
 
+// HandleConn .
 func (ig *IGate) HandleConn(conn net.Conn) {
 	authDone := false
 	bf := &buff{}

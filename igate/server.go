@@ -11,6 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Server IGate
 type Server struct {
 	udpConn     net.Conn
 	tcpAddr     *net.TCPAddr
@@ -19,6 +20,7 @@ type Server struct {
 	stopped     int32
 }
 
+// NewServer returns a new IGate server
 func NewServer(serverAddr string, udpHost string) (*Server, error) {
 	errMsg := errors.New("could create new server")
 	s := &Server{
@@ -46,6 +48,7 @@ func NewServer(serverAddr string, udpHost string) (*Server, error) {
 	return s, nil
 }
 
+// Start the IGate server
 func (s *Server) Start() error {
 	var err error
 	s.tcpListener, err = net.ListenTCP("tcp", s.tcpAddr)
@@ -62,6 +65,7 @@ func (s *Server) Start() error {
 	return nil
 }
 
+// Stop the IGate server
 func (s *Server) Stop() {
 	atomic.StoreInt32(&s.stopped, 1)
 	s.tcpListener.Close()
